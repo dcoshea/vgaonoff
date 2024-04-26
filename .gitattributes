@@ -1,0 +1,4 @@
+* text=auto
+
+# as required by MS-DOS 5 COMMAND.COM
+*.bat text eol=crlf
