@@ -23,9 +23,12 @@
 ;;; Main
 
 usage   DB 'Usage: VGAONOFF [ON|OFF]', 13, 10
-        DB 'Version 0.1', 13, 10
+        DB 'Version 0.2', 13, 10
         DB 'https://github.com/dcoshea/vgaonoff', 13, 10
         DB '$'
+
+no_vga_message  DB 'Fatal error: VGA not detected', 13, 10
+                DB '$'
 
 on_command              DB 'ON', 13
 on_command_len          EQU $ - on_command
@@ -41,6 +44,27 @@ psp_cmd_tail_ofs        EQU 81h ; Start of command-line tail in PSP
         ORG 100h                ; .COM starting offset - reserve space for PSP
 
 main:
+        ;; Check for VGA
+        mov ax, 1a00h
+        int 10h                 ; get display combination code
+        cmp al, 1ah
+        jne vga_absent          ; function not supported
+        ;; As per Ralf Brown's Interrupt List 61, the above function
+        ;; may indicate that VGA is present for the ATI EGA Wonder, so
+        ;; use the recommended procedure to rule out that card.
+        mov ax, 1c00h
+        int 10h                 ; get save/restore video state buffer size
+        cmp al, 1ch
+        je vga_present          ; function IS supported
+        ;; fall through
+
+vga_absent:
+        mov dx, OFFSET no_vga_message
+        mov ah, 09h             ; print string
+        int 21h
+        jmp exit_error
+
+vga_present:
         cld
 
         ;; Process command line

@@ -17,18 +17,16 @@ Usage
 
 * `vgaonoff on` restores normal behavior.
 
-When invoked as shown above, it generates no output, otherwise it
-displays a usage message.
+When invoked as shown above, it generates no output except in case of
+an error.  If invoked without any arguments or with an unsupported
+argument, it displays a usage message.
 
 
 Supported hardware and emulators
 --------------------------------
 
-**WARNING**: This assumes that VGA adapter is present without checking
-for it.  Most likely if you use this with an EGA adapter, garbage will
-be written to the register, causing unknown effects.  Please file an
-issue if you expect to use this in a case where a non-VGA adapter may
-be present.
+A VGA adapter is required.  This utility attempts to detect whether
+one is present.  An error is reported if one is not detected.
 
 This is known to work with Intel 865G chipset.  It has not been tested
 with other VGA hardware but it is assumed that this is fairly standard
