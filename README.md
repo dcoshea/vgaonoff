@@ -28,13 +28,17 @@ Supported hardware and emulators
 A VGA adapter is required.  This utility attempts to detect whether
 one is present.  An error is reported if one is not detected.
 
-This is known to work with Intel 865G chipset.  It has not been tested
-with other VGA hardware but it is assumed that this is fairly standard
-VGA behavior.
+This has been tested successfully with a small number of VGA adapters
+ranging from an older ISA one to the Intel 865G chipset.  It is
+assumed that this is fairly standard VGA behavior.
 
 This VGA behavior is _not_ emulated by Bochs 2.7.0, DOSBox 0.74-3,
 PCem 16 or QEMU 6.1.0, so there's a good chance it's not emulated by
 any emulator or hypervisor.
+
+GitHub issues reporting exceptional behavior - a real VGA adapter that
+this utility does _not_ work with or an emulated one that it _does_
+work with - are most welcome.
 
 
 Example
